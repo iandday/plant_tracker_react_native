@@ -1,14 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
+import { Link, Redirect, SplashScreen } from 'expo-router';
+import { Drawer } from 'expo-router/drawer';
 import React, { useCallback, useEffect } from 'react';
 
 import { useAuth, useIsFirstTime } from '@/core';
 import { Pressable, Text } from '@/ui';
-import {
-  Feed as FeedIcon,
-  Settings as SettingsIcon,
-  Style as StyleIcon,
-} from '@/ui/icons';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
@@ -31,36 +27,38 @@ export default function TabLayout() {
     return <Redirect href="/login" />;
   }
   return (
-    <Tabs>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
-          headerRight: () => <CreateNewPostLink />,
-          tabBarTestID: 'feed-tab',
-        }}
-      />
+    <>
+      <Drawer>
+        <Drawer.Screen
+          name="index"
+          options={{
+            title: 'Feed',
+            //tabBarIcon: ({ color }) => <FeedIcon color={color} />,
+            headerRight: () => <CreateNewPostLink />,
+            //tabBarTestID: 'feed-tab',
+          }}
+        />
 
-      <Tabs.Screen
-        name="style"
-        options={{
-          title: 'Style',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <StyleIcon color={color} />,
-          tabBarTestID: 'style-tab',
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: 'Settings',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
-          tabBarTestID: 'settings-tab',
-        }}
-      />
-    </Tabs>
+        <Drawer.Screen
+          name="style"
+          options={{
+            title: 'Style',
+            //headerShown: false,
+            //tabBarIcon: ({ color }) => <StyleIcon color={color} />,
+            // tabBarTestID: 'style-tab',
+          }}
+        />
+        <Drawer.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
+            //headerShown: false,
+            //tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
+            //tabBarTestID: 'settings-tab',
+          }}
+        />
+      </Drawer>
+    </>
   );
 }
 
