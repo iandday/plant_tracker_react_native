@@ -3,12 +3,12 @@ import { Link, Redirect, SplashScreen } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import React, { useCallback, useEffect } from 'react';
 
-import { useAuth, useIsFirstTime } from '@/core';
+import { useAuth, useIsBaseURLSet } from '@/core';
 import { Pressable, Text } from '@/ui';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
-  const [isFirstTime] = useIsFirstTime();
+  const [baseURL] = useIsBaseURLSet();
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
@@ -20,7 +20,7 @@ export default function TabLayout() {
     }
   }, [hideSplash, status]);
 
-  if (isFirstTime) {
+  if (baseURL === undefined) {
     return <Redirect href="/onboarding" />;
   }
   if (status === 'signOut') {
