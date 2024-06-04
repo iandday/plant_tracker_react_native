@@ -7,8 +7,8 @@ export default function Feed() {
   const token = getToken();
 
   return (
-    <View className="flex-1 ">
-      <Text>Home</Text>
+    <View className="bg-background flex-1 px-4">
+      <Text className="text-text">Home</Text>
       <Text>{token.access}</Text>
     </View>
   );

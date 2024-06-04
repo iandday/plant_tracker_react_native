@@ -1,4 +1,15 @@
 module.exports = {
+  //text_dark: '#f2f5f3',
+  //text: '#000000',
+  //background: '#f2f5f3',
+  //background_dark: '#1E1E24',
+  //primary: '#92140C',
+  //primary_dark: '#92140C',
+  secondary: '#3AAFB9',
+  secondary_dark: '#3AAFB9',
+  tertiary: '#FFCF99',
+  tertiary_dark: '#FFCF99',
+  //endcustom
   white: '#ffffff',
   black: '#000000',
   charcoal: {

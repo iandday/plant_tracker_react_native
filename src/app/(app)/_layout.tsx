@@ -1,14 +1,21 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { Link, Redirect, SplashScreen } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
-import React, { useCallback, useEffect } from 'react';
+import { useColorScheme } from 'nativewind';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useAuth, useIsBaseURLSet } from '@/core';
 import { Pressable, Text } from '@/ui';
+import { text, text_dark } from '@/ui/colors';
+import { Home, Settings } from '@/ui/icons';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
   const [baseURL] = useIsBaseURLSet();
+
+  const { colorScheme } = useColorScheme();
+  const [iconColor, setIconColor] = useState<string>();
+
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
@@ -19,6 +26,14 @@ export default function TabLayout() {
       }, 1000);
     }
   }, [hideSplash, status]);
+
+  useEffect(() => {
+    if (colorScheme === 'dark') {
+      setIconColor(text_dark);
+    } else {
+      setIconColor(text);
+    }
+  }, [colorScheme]);
 
   if (baseURL === undefined) {
     return <Redirect href="/onboarding" />;
@@ -32,10 +47,9 @@ export default function TabLayout() {
         <Drawer.Screen
           name="index"
           options={{
-            title: 'Feed',
-            //tabBarIcon: ({ color }) => <FeedIcon color={color} />,
+            title: 'Home',
+            drawerIcon: () => <Home color={iconColor} />,
             headerRight: () => <CreateNewPostLink />,
-            //tabBarTestID: 'feed-tab',
           }}
         />
 
@@ -52,9 +66,7 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: 'Settings',
-            //headerShown: false,
-            //tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
-            //tabBarTestID: 'settings-tab',
+            drawerIcon: ({ color }) => <Settings color={color} />,
           }}
         />
       </Drawer>
