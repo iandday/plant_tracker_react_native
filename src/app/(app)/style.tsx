@@ -11,7 +11,7 @@ export default function Style() {
     <>
       <FocusAwareStatusBar />
       <ScrollView className=" px-4">
-        <SafeAreaView className="bg-background flex-1">
+        <SafeAreaView className="bg-background dark:bg-backgroundDark flex-1">
           <Typography />
           <Colors />
           <Buttons />
