@@ -4,6 +4,7 @@ export * from './feed';
 export * from './github';
 export * from './home';
 export * from './language';
+export * from './plant';
 export * from './rate';
 export * from './settings';
 export * from './share';

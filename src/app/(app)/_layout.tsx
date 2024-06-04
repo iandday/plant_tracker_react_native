@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useAuth, useIsBaseURLSet } from '@/core';
 import { Pressable, Text } from '@/ui';
 import { text, text_dark } from '@/ui/colors';
-import { Home, Settings } from '@/ui/icons';
+import { Home, Plant, Settings } from '@/ui/icons';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
@@ -52,7 +52,13 @@ export default function TabLayout() {
             headerRight: () => <CreateNewPostLink />,
           }}
         />
-
+        <Drawer.Screen
+          name="my-plants"
+          options={{
+            title: 'My Plants',
+            drawerIcon: ({ color }) => <Plant color={color} />,
+          }}
+        />
         <Drawer.Screen
           name="style"
           options={{

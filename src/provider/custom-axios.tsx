@@ -1,5 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
+import { router } from 'expo-router';
 
 import { signIn, useAuth } from '@/core';
 import { getToken, removeToken } from '@/core/auth/utils';
@@ -47,8 +48,14 @@ axiosInstance.interceptors.response.use(
         const response = await axios.post(baseURL + '/user/renew', {
           refresh_token: token?.refresh,
         });
-        const { access_token, refresh_token } = response.data;
-        signIn({ access: access_token, refresh: refresh_token });
+        const { access_token, refresh_token, user } = response.data;
+        signIn({
+          access: access_token,
+          refresh: refresh_token,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+        });
 
         // Retry the original request with the new token
         originalRequest.headers.Authorization = `Bearer ${access_token}`;
@@ -56,6 +63,7 @@ axiosInstance.interceptors.response.use(
       } catch (error) {
         console.log('refresh failed');
         removeToken();
+        router.navigate('/login');
       }
     }
 
