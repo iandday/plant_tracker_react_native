@@ -9,10 +9,6 @@ import { useSoftKeyboardEffect } from '@/core/keyboard';
 import axiosInstance from '@/provider/custom-axios';
 import { FocusAwareStatusBar } from '@/ui';
 
-interface getTokensProps {
-  email: string;
-  password: string;
-}
 export default function Login() {
   const router = useRouter();
   const signIn = useAuth.use.signIn();
@@ -26,8 +22,14 @@ export default function Login() {
         password: data.password,
       });
       if (response.status === 200) {
-        const { access, refresh } = response.data;
-        signIn({ access: access, refresh: refresh });
+        const { access, refresh, user } = response.data;
+        signIn({
+          access: access,
+          refresh: refresh,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+        });
         router.push('/');
       }
     } catch (err: any) {
